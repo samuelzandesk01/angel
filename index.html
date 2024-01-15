@@ -1,0 +1,72 @@
+<!-- Assuming your first set of select fields -->
+<select class="input-location-dependant" onchange="toggleLGA(this)">
+    <option value="" selected="selected" disabled>- Select -</option>
+							<option value="Abia">Abia</option>
+							<option value="Adamawa">Adamawa</option>
+							<option value="AkwaIbom">AkwaIbom</option>
+							<option value="Anambra">Anambra</option>
+							<option value="Bauchi">Bauchi</option>
+							<option value="Bayelsa">Bayelsa</option>
+							<option value="Benue">Benue</option>
+							<option value="Borno">Borno</option>
+</select>
+<select class="select-lga">
+    <!-- options for the first LGA select field -->
+</select>
+
+<!-- Assuming your second set of select fields -->
+<select class="input-location-dependant" onchange="toggleLGA(this)">
+    <!-- options for the second select field -->
+</select>
+<select class="select-lga">
+    <!-- options for the second LGA select field -->
+</select>
+
+
+
+<script>
+[...document.querySelectorAll(".input-location-dependant")].forEach((a) => {
+    a.classList.toggle("d-none");
+    a.addEventListener("change", function () {
+        toggleLGA(this);
+    });
+});
+
+const setAttributes = (a, o) => {
+    for (var i in o) a.setAttribute(i, o[i]);
+};
+
+const toggleLGA = (a) => {
+    let o = {
+        // ... existing data ...
+
+    }[a.value];
+
+    let u = ["Select LGA...", ...Object.values(o)];
+    let parentContainer = a.parentElement.parentElement;
+
+    let lgaSelect = parentContainer.querySelector(".select-lga");
+    let optionsLength = lgaSelect.options.length;
+
+    for (let i = optionsLength - 1; i >= 0; i--) {
+        lgaSelect.options[i] = null;
+    }
+
+    u.forEach((a) => {
+        let option = document.createElement("option");
+        option.appendChild(document.createTextNode(a));
+        option.value = a;
+
+        if (a.includes("elect")) {
+            setAttributes(option, {
+                disabled: "disabled",
+                selected: "selected",
+            });
+        }
+
+        lgaSelect.appendChild(option);
+    });
+};
+
+
+</script>
